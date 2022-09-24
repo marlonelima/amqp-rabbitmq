@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+      image: rabbitmq:3-management
+      ports:
+        - 5672:5672
+        - 15672:15672
+      network_mode: "bridge"
+      volumes:
+      - $PWD/storage/rabbitmq:/var/lib/rabbitmq
+      environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root

@@ -1,0 +1,16 @@
+{
+  "name": "amqp-message-broker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "consumer.js",
+  "scripts": {
+    "publisher": "node src/publisher.js",
+    "consumer": "node src/consumer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3"
+  }
+}
