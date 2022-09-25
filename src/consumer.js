@@ -1,21 +1,20 @@
-const amqp = require('amqplib/callback_api');
-const { username, password } = require('./configs/config');
+const AMQP = require('./amqp');
 
-amqp.connect({ username, password }, function (error1, connection) {
-  connection.createChannel((error2, channel) => {
+async function consumer() {
+  const amqp = new AMQP();
+  await amqp.connect();
+  await amqp.prefetch(4);
 
-    channel.assertExchange('users-messages', 'direct', {
-      durable: false,
-    });
+  const options = {
+    exchange: 'messages',
+    queueName: 'vip-users',
+    routingKey: 'vip.1'
+  }
 
-    channel.assertQueue('', { exclusive: true }, function (error3, q) {
-      channel.bindQueue(q.queue, 'users-messages', 'consumer-1');
+  amqp.consume(options, (msg) => {
+    console.log(msg.content.toString());
+    amqp.channel.ackAll();
+  });
+}
 
-      channel.consume(q.queue, function (msg) {
-        console.log(msg.fields.routingKey, msg.content.toString());
-      });
-    });
-
-    console.log('Now listening to messages');
-  })
-});
+consumer();
