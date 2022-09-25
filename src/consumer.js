@@ -7,7 +7,7 @@ async function consumer() {
 
   const options = {
     exchange: 'messages',
-    queueName: 'vip-users',
+    queueName: 'vip.users',
     routingKey: 'vip.1'
   }
 
